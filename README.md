@@ -1,29 +1,29 @@
 # Tello ROS driver 
 
-ROS driver used in the course DTEK0081 Perception and Navigation in Robotics
+ROS driver used in the course MTRX5700 - Experimental robotics @ The University of Sydney.
+This driver was forked from https://github.com/TIERS/tello-driver-ros. We have updated the driver to be compatable with ROS Noetic which uses Python3 only. Other changes may also be implemented to meet course requirements.
 
 ## Installation
 
-We will use by default the same workspace as for the drone-racing repo: [https://github.com/TIERS/drone-racing](https://github.com/TIERS/drone-racing).
-
-If you don't have it, create the workspace and clone this repo
+If you don't have it, create your workspace and clone this repo
 ```
-mkdir -p  ~/drone_racing_ws/src && cd ~/drone_racing_ws/src
-git clone --recursive https://github.com/TIERS/tello-driver-ros.git
+cd catkin_ws
+git clone --recursive https://github.com/ACFR-RPG/tello-driver-ros
+git clone https://github.com/ACFR-RPG/camera_info_manager_py
 ```
 
 Install dependencies
 ```
-sudo apt install ros-melodic-camera-info-manager-py ros-melodic-codec-image-transport python-catkin-tools python3-dev python3-pip python-dev python-pip
+sudo apt install ros-melodic-codec-image-transport python-catkin-tools python3-dev python3-pip
 sudo -H pip3 install --upgrade pip
 sudo -H pip3 install https://github.com/damiafuentes/DJITelloPy/archive/master.zip
 ```
 
-And build it
+Build the workspace
 ```
-cd ~/drone_racing_ws
 catkin init
 catkin build
+source devel/setup.bash
 ```
 
 ## Launch for Tello with its own Wi-Fi AP
@@ -33,33 +33,11 @@ catkin build
 
 Then launch the driver
 ```
-source ~/drone_racing_ws/devel/setup.bash
 roslaunch tello_driver tello_node.launch tello_ip:="192.168.10.1"
 ```
 
-You can control it with the `teleop_twist_keyboard` node. Install it with
-```
-sudo apt install ros-melodic-teleop-twist-keyboard
-```
 
-and run it
-```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/tello/cmd_vel
-```
-
-## Launch for Tello Edo connected to same Wi-Fi network
-
-- Turn on Tello EDU drone
-- Check IP (for the course, they are written on top of the drone)
-
-Then launch the driver modifying the IP
-```
-source ~/drone_racing_ws/devel/setup.bash
-roslaunch tello_driver tello_node.launch tello_ip:="192.168.XXX.XXX"
-```
-
-
-## ROS Nodes
+## ROS Node - Tello Node
 
 ### Subscribed topics
 * ```/tello/cmd_vel``` [geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html)
@@ -95,9 +73,14 @@ roslaunch tello_driver tello_node.launch tello_ip:="192.168.XXX.XXX"
 * ```~/tello_driver_node/attitude_limit```
 * ```~/tello_driver_node/low_bat_threshold```
 
+## Manual Control
+The drone subscribes to `geometry_msgs/Twist` messages that can be used for manual control. Install the `teleop_twist_keyboard` node:
+```
+sudo apt install ros-melodic-teleop-twist-keyboard
+```
+And run it with:
+```
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/tello/cmd_vel
+```
 
-## Contact
 
-For any questions, write to `jopequ@utu.fi`.
-
-Visit us at [https://tiers.utu.fi](https://tiers.utu.fi)
