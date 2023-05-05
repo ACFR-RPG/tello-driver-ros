@@ -7,20 +7,21 @@ This driver was forked from https://github.com/TIERS/tello-driver-ros. We have u
 
 If you don't have it, create your workspace and clone this repo
 ```
-cd catkin_ws
+cd catkin_ws/src
 git clone --recursive https://github.com/ACFR-RPG/tello-driver-ros
 git clone https://github.com/ACFR-RPG/camera_info_manager_py
 ```
 
 Install dependencies
 ```
-sudo apt install ros-melodic-codec-image-transport python-catkin-tools python3-dev python3-pip
-sudo -H pip3 install --upgrade pip
-sudo -H pip3 install https://github.com/damiafuentes/DJITelloPy/archive/master.zip
+sudo apt install ros-noetic-codec-image-transport python-catkin-tools python3-dev python3-pip
+pip3 install --upgrade pip
+pip3 install https://github.com/damiafuentes/DJITelloPy/archive/master.zip
 ```
 
 Build the workspace
 ```
+cd ..
 catkin init
 catkin build
 source devel/setup.bash
@@ -76,7 +77,7 @@ roslaunch tello_driver tello_node.launch tello_ip:="192.168.10.1"
 ## Manual Control
 The drone subscribes to `geometry_msgs/Twist` messages that can be used for manual control. Install the `teleop_twist_keyboard` node:
 ```
-sudo apt install ros-melodic-teleop-twist-keyboard
+sudo apt install ros-noetic-teleop-twist-keyboard
 ```
 And run it with:
 ```
