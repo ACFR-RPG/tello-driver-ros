@@ -460,6 +460,9 @@ class TelloNode(tello.Tello):
             self.frame_thread.join()
 
     def cb_h264_frame(self, event, sender, data, **args):
+        # print(self.video_data_loss)
+        # if self.video_data_loss >0:
+        #     return 
         frame, seq_id, frame_secs = data
         pkt_msg = CompressedImage()
         pkt_msg.header.seq = seq_id
