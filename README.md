@@ -37,6 +37,8 @@ Then launch the driver
 roslaunch tello_driver tello_node.launch tello_ip:="192.168.10.1"
 ```
 
+If you run into decoding errors, please try tello_node_decode.launch instead
+
 
 ## ROS Node - Tello Node
 
@@ -83,5 +85,11 @@ And run it with:
 ```
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/tello/cmd_vel
 ```
+
+## Video Glitch Filtering
+Glitch will appear if the connection between the tello and your device is not good. A filtering mechanism is added. To apply this, go to /nodes and read the instruction
+
+## IMU
+The update rate of the IMU on tello is 15Hz. It is too low for any Visual-Inertial estimator like (VINS-Mono or Orb-SLAM3)
 
 
